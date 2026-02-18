@@ -1,0 +1,697 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>
+      Email Provider Comparison — Proton vs Mailgun vs SendGrid vs Amazon SES
+    </title>
+    <meta
+      name="description"
+      content="A practical, hosting-focused comparison of Proton, Mailgun, SendGrid, and Amazon SES — with charts, tables, and recommendations for Plesk multi-site servers."
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <header class="site-header">
+      <div class="wrap">
+        <div class="badge">SMTP Relay • Deliverability • Hosting</div>
+        <h1>Email Provider Showdown</h1>
+        <p class="subtitle">
+          A practical, infrastructure-focused breakdown of
+          <strong>Proton</strong>, <strong>Mailgun</strong>,
+          <strong>SendGrid</strong>, and <strong>Amazon SES</strong> — built for
+          real website stacks (Plesk, WordPress, Drupal).
+        </p>
+
+        <div class="header-grid">
+          <div class="card mini">
+            <h3>Use case</h3>
+            <p>
+              Transactional email for many sites on one server (forms, receipts,
+              notifications).
+            </p>
+          </div>
+          <div class="card mini">
+            <h3>Problem this solves</h3>
+            <p>
+              Outlook/Hotmail filtering + reputation issues when sending
+              directly from a VPS/shared server IP.
+            </p>
+          </div>
+          <div class="card mini">
+            <h3>Key decision</h3>
+            <p>
+              Pick a provider that matches your setup:
+              <em>infrastructure vs platform</em>, cost, and admin overhead.
+            </p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <!-- Quick nav -->
+      <nav class="toc">
+        <a href="#snapshot">Snapshot</a>
+        <a href="#deep-dive">Deep dive</a>
+        <a href="#charts">Charts</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#recommendation">Recommendations</a>
+        <a href="#setup-notes">Plesk notes</a>
+        <a href="#references">References</a>
+      </nav>
+
+      <!-- Snapshot -->
+      <section id="snapshot" class="section">
+        <h2>Snapshot Comparison</h2>
+        <p class="lead">
+          One-line positioning for each provider — before we go deep.
+        </p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Provider</th>
+                <th>What it really is</th>
+                <th>Best for</th>
+                <th>Weak for</th>
+                <th>Difficulty</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Amazon SES</strong></td>
+                <td>Email infrastructure (SMTP + API)</td>
+                <td>Servers, multi-site hosting, transactional</td>
+                <td>Marketing UI, built-in dashboards</td>
+                <td><span class="pill pill-med">Technical</span></td>
+              </tr>
+              <tr>
+                <td><strong>SendGrid</strong></td>
+                <td>Email platform (UI + SMTP + API)</td>
+                <td>Teams that want dashboards + easier ops</td>
+                <td>Lowest cost at scale</td>
+                <td><span class="pill pill-easy">Easy</span></td>
+              </tr>
+              <tr>
+                <td><strong>Mailgun</strong></td>
+                <td>Developer email platform (API-first)</td>
+                <td>Apps/SaaS needing analytics + tooling</td>
+                <td>Simple “set it and forget it” hosting</td>
+                <td><span class="pill pill-med">Medium</span></td>
+              </tr>
+              <tr>
+                <td><strong>Proton</strong></td>
+                <td>Secure mailbox provider (privacy email)</td>
+                <td>Human email + privacy-first mailbox use</td>
+                <td>Server transactional at scale</td>
+                <td><span class="pill pill-easy">Easy</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout">
+          <strong>Important:</strong> Proton is primarily for
+          <em>mailboxes</em> (people sending email). SES/SendGrid/Mailgun are
+          for <em>applications and websites</em> sending transactional email.
+        </div>
+      </section>
+
+      <!-- Deep Dive -->
+      <section id="deep-dive" class="section">
+        <h2>Deep Dive: What You Get (and What You Don’t)</h2>
+
+        <div class="grid-2">
+          <!-- SES -->
+          <article class="card provider">
+            <div class="provider-head">
+              <h3>Amazon SES</h3>
+              <span class="tag">Infrastructure</span>
+            </div>
+            <p>
+              SES is the “mail engine” — built for reliability, scale, and cost
+              efficiency. Ideal when your server (Plesk) should act like a mail
+              client and relay through a trusted network.
+            </p>
+
+            <h4>Highlights</h4>
+            <ul>
+              <li>Pay-as-you-go pricing, extremely cost-efficient</li>
+              <li>
+                Excellent fit for transactional email + multi-site servers
+              </li>
+              <li>
+                Supports DKIM, feedback loops (bounces/complaints), API + SMTP
+              </li>
+            </ul>
+
+            <h4>Trade-offs</h4>
+            <ul>
+              <li>More “AWS-ish” setup and ops</li>
+              <li>Dashboards exist, but not as friendly as platform tools</li>
+              <li>Template/marketing tooling is not the focus</li>
+            </ul>
+
+            <div class="review">
+              <strong>Practical review:</strong> Best for hosting environments
+              where you want one SMTP relay that fixes Outlook deliverability
+              across many sites without paying platform pricing.
+            </div>
+          </article>
+
+          <!-- SendGrid -->
+          <article class="card provider">
+            <div class="provider-head">
+              <h3>SendGrid (Twilio)</h3>
+              <span class="tag">Platform</span>
+            </div>
+            <p>
+              SendGrid is a full email platform with dashboards, templates, and
+              easier administration. It’s often the smoothest experience for
+              teams that want UI + analytics.
+            </p>
+
+            <h4>Highlights</h4>
+            <ul>
+              <li>Very easy onboarding and management UI</li>
+              <li>Good analytics and event tooling</li>
+              <li>Strong for both transactional and (optionally) marketing</li>
+            </ul>
+
+            <h4>Trade-offs</h4>
+            <ul>
+              <li>More expensive at scale than SES</li>
+              <li>You pay for platform features you may not use</li>
+              <li>Tiered plans can be less flexible</li>
+            </ul>
+
+            <div class="review">
+              <strong>Practical review:</strong> Best if you want “set it up
+              once + monitor in dashboards” and don’t mind paying extra for
+              convenience.
+            </div>
+          </article>
+
+          <!-- Mailgun -->
+          <article class="card provider">
+            <div class="provider-head">
+              <h3>Mailgun</h3>
+              <span class="tag">Developer-First</span>
+            </div>
+            <p>
+              Mailgun is API-centric and strong for dev workflows, analytics,
+              and email tooling. Great for SaaS/app teams that want more control
+              and insight.
+            </p>
+
+            <h4>Highlights</h4>
+            <ul>
+              <li>Strong APIs + webhooks</li>
+              <li>Good deliverability tooling and analytics</li>
+              <li>Useful add-ons for verification and reputation monitoring</li>
+            </ul>
+
+            <h4>Trade-offs</h4>
+            <ul>
+              <li>Can get pricey depending on plan/volume</li>
+              <li>Often more than a typical hosting server needs</li>
+              <li>Some tooling is packaged into separate products/tiers</li>
+            </ul>
+
+            <div class="review">
+              <strong>Practical review:</strong> Great if you’re building an
+              application and need deep mail operations. For “multi-site Plesk
+              SMTP relay,” it can be overkill.
+            </div>
+          </article>
+
+          <!-- Proton -->
+          <article class="card provider">
+            <div class="provider-head">
+              <h3>Proton Mail</h3>
+              <span class="tag">Mailbox + Privacy</span>
+            </div>
+            <p>
+              Proton is primarily a secure mailbox provider. It’s excellent for
+              human communication and privacy, but it’s not designed to be your
+              primary transactional email relay for websites.
+            </p>
+
+            <h4>Highlights</h4>
+            <ul>
+              <li>Privacy-first mailbox provider</li>
+              <li>
+                Great for business email accounts and secure communications
+              </li>
+            </ul>
+
+            <h4>Trade-offs</h4>
+            <ul>
+              <li>
+                Transactional/SMTP relay use is not its core product focus
+              </li>
+              <li>
+                Sending limits and anti-abuse controls are mailbox-oriented
+              </li>
+              <li>Limited tooling for bounce/complaint workflows at scale</li>
+            </ul>
+
+            <div class="review">
+              <strong>Practical review:</strong> Proton is a strong mailbox
+              solution. For your hosting SMTP relay needs, it’s not the right
+              tool compared to SES/SendGrid/Mailgun.
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Charts -->
+      <section id="charts" class="section">
+        <h2>Charts</h2>
+        <p class="lead">
+          These are “relative scoring” charts to visualise fit — not absolute
+          scientific measurements. Scores reflect a hosting/transactional email
+          perspective.
+        </p>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>Best Fit for Plesk Multi-Site Transactional Email</h3>
+            <div class="bars" aria-label="Best fit chart">
+              <div class="bar">
+                <div class="bar-label">Amazon SES</div>
+                <div class="bar-track"><div class="bar-fill w-95"></div></div>
+                <div class="bar-score">9.5/10</div>
+              </div>
+              <div class="bar">
+                <div class="bar-label">SendGrid</div>
+                <div class="bar-track"><div class="bar-fill w-85"></div></div>
+                <div class="bar-score">8.5/10</div>
+              </div>
+              <div class="bar">
+                <div class="bar-label">Mailgun</div>
+                <div class="bar-track"><div class="bar-fill w-75"></div></div>
+                <div class="bar-score">7.5/10</div>
+              </div>
+              <div class="bar">
+                <div class="bar-label">Proton</div>
+                <div class="bar-track"><div class="bar-fill w-35"></div></div>
+                <div class="bar-score">3.5/10</div>
+              </div>
+            </div>
+            <p class="note">
+              SES ranks highest because it’s infrastructure-priced and built for
+              SMTP relay across many domains.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Ease of Setup & Ongoing Administration</h3>
+            <div class="bars" aria-label="Ease of setup chart">
+              <div class="bar">
+                <div class="bar-label">SendGrid</div>
+                <div class="bar-track"><div class="bar-fill w-92"></div></div>
+                <div class="bar-score">9.2/10</div>
+              </div>
+              <div class="bar">
+                <div class="bar-label">Mailgun</div>
+                <div class="bar-track"><div class="bar-fill w-78"></div></div>
+                <div class="bar-score">7.8/10</div>
+              </div>
+              <div class="bar">
+                <div class="bar-label">Amazon SES</div>
+                <div class="bar-track"><div class="bar-fill w-65"></div></div>
+                <div class="bar-score">6.5/10</div>
+              </div>
+              <div class="bar">
+                <div class="bar-label">Proton</div>
+                <div class="bar-track"><div class="bar-fill w-60"></div></div>
+                <div class="bar-score">6.0/10</div>
+              </div>
+            </div>
+            <p class="note">
+              SendGrid wins on dashboards and guided onboarding. SES is more
+              technical but extremely cost-effective.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Pricing -->
+      <section id="pricing" class="section">
+        <h2>Pricing (Official Pages + Practical Take)</h2>
+        <p class="lead">
+          Prices change over time. The table below uses the providers’ pricing
+          pages as the source of truth. Use it as a planning guide (not an
+          invoice).
+        </p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Provider</th>
+                <th>Typical pricing model</th>
+                <th>What you’ll feel in practice</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Amazon SES</strong></td>
+                <td>Pay-as-you-go (e.g., ~$0.10/1,000 emails)</td>
+                <td>Best value for many sites + low/medium volume</td>
+                <td>
+                  Great for transactional relay; dashboards are more “cloud
+                  ops.”
+                </td>
+              </tr>
+              <tr>
+                <td><strong>SendGrid</strong></td>
+                <td>Tiered plans (Essentials/Pro, etc.)</td>
+                <td>Pay extra for convenience + analytics UI</td>
+                <td>Easy onboarding; strong admin experience.</td>
+              </tr>
+              <tr>
+                <td><strong>Mailgun</strong></td>
+                <td>Plans and add-ons</td>
+                <td>Great tooling; cost can rise with features/volume</td>
+                <td>Excellent for dev teams building email-heavy apps.</td>
+              </tr>
+              <tr>
+                <td><strong>Proton</strong></td>
+                <td>Mailbox subscription plans + sending limits</td>
+                <td>Best for people, not apps/servers</td>
+                <td>Transactional SMTP relay is not the core use case.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>Cost “feel” (relative)</h3>
+            <div class="meter">
+              <div class="meter-row">
+                <span>Amazon SES</span>
+                <span class="dots">
+                  <span class="dot on"></span><span class="dot"></span
+                  ><span class="dot"></span><span class="dot"></span
+                  ><span class="dot"></span>
+                </span>
+                <span class="muted">Lowest</span>
+              </div>
+              <div class="meter-row">
+                <span>Mailgun</span>
+                <span class="dots">
+                  <span class="dot on"></span><span class="dot on"></span
+                  ><span class="dot on"></span><span class="dot"></span
+                  ><span class="dot"></span>
+                </span>
+                <span class="muted">Medium</span>
+              </div>
+              <div class="meter-row">
+                <span>SendGrid</span>
+                <span class="dots">
+                  <span class="dot on"></span><span class="dot on"></span
+                  ><span class="dot on"></span><span class="dot on"></span
+                  ><span class="dot"></span>
+                </span>
+                <span class="muted">Higher</span>
+              </div>
+              <div class="meter-row">
+                <span>Proton</span>
+                <span class="dots">
+                  <span class="dot on"></span><span class="dot on"></span
+                  ><span class="dot on"></span><span class="dot on"></span
+                  ><span class="dot on"></span>
+                </span>
+                <span class="muted">Mailbox pricing</span>
+              </div>
+            </div>
+            <p class="note">
+              This meter is intentionally simplified: SES is infrastructure
+              pricing; SendGrid/Mailgun include platform features.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Deliverability reality (Outlook/Hotmail)</h3>
+            <p>
+              For shared hosting servers, the biggest win is:
+              <strong>stop sending directly from your server IP</strong>. Use a
+              relay with strong reputation and proper authentication
+              (SPF/DKIM/DMARC).
+            </p>
+            <ul>
+              <li>
+                <strong>SES</strong>: great for relay + cost (requires more
+                setup)
+              </li>
+              <li>
+                <strong>SendGrid</strong>: great dashboards + faster admin
+                workflow
+              </li>
+              <li><strong>Mailgun</strong>: strong APIs + dev tooling</li>
+              <li>
+                <strong>Proton</strong>: not built for server transactional
+                flows
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Recommendation -->
+      <section id="recommendation" class="section">
+        <h2>
+          Recommendations for Your Setup (Plesk • Multi-Site • Transactional)
+        </h2>
+
+        <div class="card highlight">
+          <h3>Your requirements (based on this server)</h3>
+          <ul class="checklist">
+            <li>One server handles multiple WordPress/Drupal sites</li>
+            <li>
+              Emails are transactional (forms, booking notifications, receipts)
+            </li>
+            <li>Shared server sending IP previously hit Microsoft filtering</li>
+            <li>
+              Need a single “smart host” relay to fix deliverability for all
+              domains
+            </li>
+            <li>Cost matters as you scale across multiple sites</li>
+          </ul>
+        </div>
+
+        <div class="grid-3">
+          <div class="card rank">
+            <div class="rank-top">
+              <span class="rank-num">Top 1</span>
+              <h3>Amazon SES</h3>
+            </div>
+            <p>
+              <strong>Best overall</strong> for multi-site Plesk transactional
+              relay.
+            </p>
+            <ul>
+              <li>Infrastructure pricing (best long-term cost)</li>
+              <li>Designed for server/app sending</li>
+              <li>
+                Excellent for solving Outlook deliverability issues by relaying
+              </li>
+            </ul>
+            <p class="note">
+              Pick SES if you want the most efficient “relay backbone” and
+              you’re comfortable with a slightly more technical setup.
+            </p>
+          </div>
+
+          <div class="card rank">
+            <div class="rank-top">
+              <span class="rank-num">Top 2</span>
+              <h3>SendGrid</h3>
+            </div>
+            <p>
+              <strong>Best runner-up</strong> if you want dashboards and easier
+              administration.
+            </p>
+            <ul>
+              <li>Fast onboarding, great UI</li>
+              <li>Good analytics and management features</li>
+              <li>Solid for teams or clients who want visibility</li>
+            </ul>
+            <p class="note">
+              Pick SendGrid if the admin experience is worth paying more than
+              SES.
+            </p>
+          </div>
+
+          <div class="card rank">
+            <div class="rank-top">
+              <span class="rank-num">Alt</span>
+              <h3>Mailgun</h3>
+            </div>
+            <p>
+              Strong dev platform — best if you’re building an app and want
+              deeper tooling.
+            </p>
+            <ul>
+              <li>Excellent APIs + webhooks</li>
+              <li>Great for SaaS-style mail ops</li>
+              <li>Can be overkill for basic hosting relay</li>
+            </ul>
+            <p class="note">
+              Mailgun shines when email is a product feature, not just “website
+              sends forms.”
+            </p>
+          </div>
+        </div>
+
+        <div class="callout">
+          <strong>Why Proton isn’t recommended here:</strong>
+          Proton is excellent for secure mailboxes. But your need is a reliable,
+          reputation-rich SMTP relay for websites — which is exactly what
+          SES/SendGrid/Mailgun are built for.
+        </div>
+      </section>
+
+      <!-- Setup notes -->
+      <section id="setup-notes" class="section">
+        <h2>Plesk Smart-Host Setup Notes (High Level)</h2>
+        <p class="lead">
+          Your goal is simple: make Postfix/Plesk relay outbound mail through
+          the provider, instead of sending directly from your server IP.
+        </p>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>Minimum DNS checklist</h3>
+            <ul>
+              <li>
+                <strong>SPF</strong>: authorise your provider (e.g., include
+                their SPF)
+              </li>
+              <li>
+                <strong>DKIM</strong>: enable signing and publish the DKIM DNS
+                records
+              </li>
+              <li>
+                <strong>DMARC</strong>: publish policy record (start with
+                <code>p=none</code>)
+              </li>
+            </ul>
+            <p class="note">
+              This is the foundation for Outlook/Gmail trust. If any of these
+              are missing, junk placement becomes more likely.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Operational checklist</h3>
+            <ul>
+              <li>
+                Use an SMTP relay provider (SES/SendGrid/Mailgun) as your “smart
+                host”
+              </li>
+              <li>Warm up domains if new (steady consistent sending)</li>
+              <li>Monitor bounces/complaints and keep rates low</li>
+              <li>
+                Avoid “test-looking” subjects for warmup (use real transactional
+                patterns)
+              </li>
+            </ul>
+            <p class="note">
+              Once Microsoft accepts mail (no more 550 blocks), inbox placement
+              becomes reputation + engagement.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- References -->
+      <section id="references" class="section">
+        <h2>References (Official Pages)</h2>
+        <p class="lead">
+          These are the key vendor docs and pricing pages used for the facts
+          above.
+        </p>
+
+        <div class="refs card">
+          <ul>
+            <li>
+              <a
+                href="https://aws.amazon.com/ses/pricing/"
+                target="_blank"
+                rel="noopener"
+                >Amazon SES pricing (AWS)</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://sendgrid.com/en-us/pricing"
+                target="_blank"
+                rel="noopener"
+                >SendGrid pricing (SendGrid)</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://www.mailgun.com/pricing/"
+                target="_blank"
+                rel="noopener"
+                >Mailgun pricing (Mailgun)</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://proton.me/support/email-sending-limits"
+                target="_blank"
+                rel="noopener"
+                >Proton Mail sending limits (Proton)</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://proton.me/support/smtp-submission"
+                target="_blank"
+                rel="noopener"
+                >Proton SMTP submission (Proton)</a
+              >
+            </li>
+          </ul>
+          <p class="note">
+            For your environment (Plesk multi-site), provider choice is less
+            about “which can send email” and more about: cost + admin overhead +
+            deliverability posture for Outlook/Gmail.
+          </p>
+        </div>
+      </section>
+
+      <footer class="site-footer">
+        <div class="footer-grid">
+          <div>
+            <strong>Top pick:</strong> Amazon SES<br />
+            <span class="muted"
+              >Best fit for Plesk multi-site transactional relay</span
+            >
+          </div>
+          <div>
+            <strong>Runner-up:</strong> SendGrid<br />
+            <span class="muted"
+              >Best if you want dashboards + easiest admin</span
+            >
+          </div>
+          <div>
+            <strong>Built for GitHub Pages</strong><br />
+            <span class="muted">CNM GitHub</span>
+          </div>
+        </div>
+      </footer>
+    </main>
+  </body>
+</html>
