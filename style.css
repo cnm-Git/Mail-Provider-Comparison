@@ -234,7 +234,26 @@ h4 {
   overflow: hidden;
   background: rgba(255, 255, 255, 0.03);
   box-shadow: var(--shadow);
+
+  /* MAGIC FIX */
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
+
+/* Nice mobile scroll indicator */
+.table-wrap::after {
+  content: '→ Scroll →';
+  display: none;
+  font-size: 0.8rem;
+  color: var(--muted);
+  padding: 0.4rem 0.8rem;
+}
+
+/* Keep table wide and readable */
+.table-wrap table {
+  min-width: 720px;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -469,6 +488,19 @@ tbody tr:hover {
   }
   .footer-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .table-wrap::after {
+    display: block;
+    text-align: right;
+  }
+
+  table th,
+  table td {
+    padding: 0.75rem;
+    font-size: 0.9rem;
   }
 }
 
