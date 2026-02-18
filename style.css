@@ -471,3 +471,14 @@ tbody tr:hover {
     grid-template-columns: 1fr;
   }
 }
+
+/* Setup time section */
+#setup-time .bar-fill.w-80 {
+  width: 80%;
+}
+#setup-time .bar-fill.w-70 {
+  width: 70%;
+}
+#setup-time .bar-fill.w-55 {
+  width: 55%;
+}

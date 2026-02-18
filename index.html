@@ -58,9 +58,11 @@
         <a href="#deep-dive">Deep dive</a>
         <a href="#charts">Charts</a>
         <a href="#pricing">Pricing</a>
+        <a href="#deliverability">Deliverability & Reputation</a>
         <a href="#recommendation">Recommendations</a>
+        <a href="#setup-time">Setup Estimation</a>
         <a href="#setup-notes">Plesk notes</a>
-        <a href="#references">References</a>
+        <a href="#references">Refs</a>
       </nav>
 
       <!-- Snapshot -->
@@ -678,6 +680,141 @@
           Proton is excellent for secure mailboxes. But your need is a reliable,
           reputation-rich SMTP relay for websites — which is exactly what
           SES/SendGrid/Mailgun are built for.
+        </div>
+      </section>
+
+      <!-- Setup Estimation -->
+      <section id="setup-time" class="section">
+        <h2>Time to Implement with Plesk Infrastructure</h2>
+        <p class="lead">
+          Realistic estimates for configuring each provider as a
+          <strong>Plesk SMTP Smart Host</strong>. Includes DNS setup (SPF, DKIM,
+          DMARC), provider onboarding, and testing.
+        </p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Provider</th>
+                <th>Beginner Admin</th>
+                <th>Intermediate Admin</th>
+                <th>Advanced Admin</th>
+                <th>Complexity</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Amazon SES</strong></td>
+                <td>3–5 hours</td>
+                <td>1–2 hours</td>
+                <td>30–45 minutes</td>
+                <td>High</td>
+              </tr>
+              <tr>
+                <td><strong>SendGrid</strong></td>
+                <td>2–3 hours</td>
+                <td>45–90 minutes</td>
+                <td>30 minutes</td>
+                <td>Medium</td>
+              </tr>
+              <tr>
+                <td><strong>Mailgun</strong></td>
+                <td>2–4 hours</td>
+                <td>1–2 hours</td>
+                <td>45–60 minutes</td>
+                <td>Medium</td>
+              </tr>
+              <tr>
+                <td><strong>Proton</strong></td>
+                <td>1–2 hours</td>
+                <td>45–60 minutes</td>
+                <td>30 minutes</td>
+                <td>Low*</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout">
+          *Proton is easy to set up as a mailbox, but not ideal as a
+          transactional SMTP relay for servers.
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>Average Setup Time (Visual)</h3>
+
+            <div class="bars">
+              <div class="bar">
+                <div class="bar-label">Amazon SES</div>
+                <div class="bar-track"><div class="bar-fill w-95"></div></div>
+                <div class="bar-score">Longest</div>
+              </div>
+              <div class="bar">
+                <div class="bar-label">Mailgun</div>
+                <div class="bar-track"><div class="bar-fill w-80"></div></div>
+                <div class="bar-score">Medium</div>
+              </div>
+              <div class="bar">
+                <div class="bar-label">SendGrid</div>
+                <div class="bar-track"><div class="bar-fill w-70"></div></div>
+                <div class="bar-score">Fast</div>
+              </div>
+              <div class="bar">
+                <div class="bar-label">Proton</div>
+                <div class="bar-track"><div class="bar-fill w-55"></div></div>
+                <div class="bar-score">Mailbox</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Why SES takes longer</h3>
+            <ul>
+              <li>AWS account setup & verification</li>
+              <li>Moving out of sandbox</li>
+              <li>IAM + SMTP credential creation</li>
+              <li>Domain verification & DKIM</li>
+              <li>Plesk smart-host configuration</li>
+            </ul>
+
+            <div class="review">
+              Once configured, SES becomes the
+              <strong>lowest maintenance</strong> and cheapest long-term
+              solution.
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <div class="card">
+            <h3>Beginner Experience</h3>
+            <p>First time working with DNS, SMTP and authentication records.</p>
+            <ul>
+              <li>SendGrid easiest onboarding</li>
+              <li>Mailgun moderate</li>
+              <li>SES steepest learning curve</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Intermediate Experience</h3>
+            <p>Comfortable with DNS and server admin tasks.</p>
+            <ul>
+              <li>All providers become manageable</li>
+              <li>SES setup time drops significantly</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Advanced Admin</h3>
+            <p>Familiar with SMTP, DNS, and cloud providers.</p>
+            <ul>
+              <li>All providers setup within 30–60 minutes</li>
+              <li>SES becomes the obvious long-term choice</li>
+            </ul>
+          </div>
         </div>
       </section>
 
